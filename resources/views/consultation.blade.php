@@ -30,7 +30,7 @@
                             <label for="file" class="col-md-4 col-form-label text-md-right">{{ __('Dokumen') }}</label>
 
                             <div class="col-md-6">
-                                <input id="file" type="file" name="file" class="form-control" required multiple>
+                                <input id="file" type="file" name="file[]" class="form-control" required multiple>
 
                                 @error('file')
                                     <span class="invalid-feedback" role="alert">

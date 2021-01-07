@@ -50,12 +50,14 @@ class ConsultationController extends Controller
 
         $foto = $request->file('file');
         if($foto) {
-            $banner_path = $foto->store('files', 'public');
-            $files = new ProjectFile;
-            $files->id_user = Auth::user()->id;
-            $files->id_project = $banner->id;
-            $files->file = $banner_path;
-            $files->save();
+            foreach ($foto as $file) {
+                $banner_path = $file->store('files', 'public');
+                $files = new ProjectFile;
+                $files->id_user = Auth::user()->id;
+                $files->id_project = $banner->id;
+                $files->file = $banner_path;
+                $files->save();
+            }
         }
 
         //return redirect()->route('home')->with('status', 'berhasil menyimpan data konsultasi');
