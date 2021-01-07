@@ -24,6 +24,7 @@ Route::get('blog', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/first', 'HomeController@first')->name('first');
 Route::get('/chat', 'HomeController@index')->name('chat');
 Route::get('/consultation', 'ConsultationController@index')->name('consultation');
 Route::post('/consultation', 'ConsultationController@store');

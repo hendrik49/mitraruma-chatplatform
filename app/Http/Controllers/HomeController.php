@@ -35,7 +35,7 @@ class HomeController extends Controller
         return view('home', compact('id','project'));
     }
 
-    public function firstConsul(Request $request, $id = null)
+    public function first(Request $request, $id = null)
     {
         $id = $request->query('id');
         $project = Project::with('files')->where('id',$id)->first();
