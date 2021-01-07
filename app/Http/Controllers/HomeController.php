@@ -30,8 +30,13 @@ class HomeController extends Controller
     public function index(Request $request, $id = null)
     {
         $id = $request->query('id');
+        
+
         $project = Project::with('files')->where('id',$id)->first();
 
+        if($project==null){
+            return abort(404, 'Donasi zakat tidak ditemukan');
+        }
         return view('home', compact('id','project'));
     }
 
