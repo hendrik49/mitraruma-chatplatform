@@ -24,6 +24,7 @@ Route::get('blog', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/consultation', 'HomeController@consultation')->name('consultation');
 
 // routing untuk message
 Route::group(['prefix' => 'message'], function () {
