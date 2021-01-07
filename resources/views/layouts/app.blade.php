@@ -37,7 +37,7 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="http://mitraruma.com">{{ __('Tentang') }}</a>
+                            <a class="nav-link" target="_blank" href="http://mitraruma.com">{{ __('Tentang') }}</a>
                         </li>
                     </ul>
 
