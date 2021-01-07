@@ -30,9 +30,18 @@ class HomeController extends Controller
     public function index(Request $request, $id = null)
     {
         $id = $request->query('id');
+        $project = Project::with('files')->where('id',$id)->first();
+
+        return view('home', compact('id','project'));
+    }
+
+    public function first(Request $request, $id = null)
+    {
+        $id = $request->query('id');
+        $project = Project::with('files')->where('id',$id)->first();
 
         $this->firstConsult($id);
-        return view('home', compact('id'));
+        return view('home', compact('id','project'));
     }
 
     public function firstConsult($id)

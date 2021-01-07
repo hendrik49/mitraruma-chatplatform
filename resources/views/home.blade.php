@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="card">
-        <div class="card-header text-center">Perbaikan Kamar Mandi #Order {{$id}}</div>
+        <div class="card-header text-center">{{$project->description}} #Order {{$id}}</div>
 
         <div class="card-body">
             <div class="row">
