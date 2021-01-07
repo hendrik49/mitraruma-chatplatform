@@ -58,7 +58,11 @@ class ConsultationController extends Controller
             $files->save();
         }
 
-        return redirect()->route('home')->with('status', 'berhasil menyimpan data konsultasi');
+        //return redirect()->route('home')->with('status', 'berhasil menyimpan data konsultasi');
+        return redirect()->action('HomeController@index', [
+            'id' => $banner->id
+        ]);
+
     }
 
     public function show($id)

@@ -21,9 +21,11 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index(Request $request, $id = null)
     {
-        return view('home');
+        $id = $request->query('id');
+
+        return view('home',compact('id'));
     }
 
     public function consultation()
