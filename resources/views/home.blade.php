@@ -46,20 +46,23 @@
                                             <div class="media">
                                                 <img class="mr-3 rounded-sm rounded-circle" :src="message.avatar" alt="profile">
                                                 <div class="media-body">
-                                                    <div class="alert alert-primary mb-0">
+                                                    <div class="alert alert-primary mb-2">
                                                         @{{ message.content }}
+                                                        <div class="text-right"><i>@{{ new Date(message.created_at).toLocaleDateString()}}</i></div>
                                                     </div>
-                                                    <small><i>@{{ new Date(message.created_at).toLocaleDateString()}}</i></small>
                                                 </div>
                                             </div>
                                         </div>
                                     </li>
                                     <li v-else class="list-group-item">
                                         <div class="list-message-item right">
-                                            <div class="alert alert-secondary mb-0">
-                                                @{{ message.content }}
+                                            <div class="media">
+                                                <img class="mr-3 rounded-sm rounded-circle" :src="message.avatar" alt="profile">
+                                                <div class="alert alert-secondary mb-2" style="width: 100% !important">
+                                                    @{{ message.content }}
+                                                    <div class="text-right"><i>@{{ new Date(message.created_at).toLocaleDateString()}}</i></div>
+                                                </div>
                                             </div>
-                                            <small class="float-right"><i>@{{ new Date(message.created_at).toLocaleDateString()}}</i></small>
                                         </div>
                                     </li>
                                 </div>
