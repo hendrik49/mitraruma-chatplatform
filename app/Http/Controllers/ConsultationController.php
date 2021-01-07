@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Project;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class ConsultationController extends Controller
 {
@@ -29,22 +33,27 @@ class ConsultationController extends Controller
     public function store(Request $request)
     {
         $validasi = $this->validate($request, [
-            'file' => 'image|mimes:jpeg,png,jpg|dimensions:min_width=980,min_height=480|max:1024'
+            'file' => 'image|mimes:jpeg,png,jpg|dimensions:min_width=980,min_height=480|max:1024',
+            'description' => 'required',
+            'name' => 'required',
+            'contact' => 'required',
+            'price' => 'required'
         ]);
 
-        $banner = new \App\Banner;
-        $foto = $request->file('dokumentasi');
+        $banner = new Project;
+        $foto = $request->file('file');
         if($foto) {
-            $banner_path = $foto->store('fotobanner', 'public');
-            $banner->dokumentasi = $banner_path;
+            $banner_path = $foto->store('files', 'public');
+            $banner->file = $banner_path;
         }
-        $banner->nama    = $request->nama;
-        $banner->link  = $request->link;
-        $banner->created_by = Auth::user()->id;
+        $banner->name    = $request->name;
+        $banner->description    = $request->description;
+        $banner->price    = $request->price;
+        $banner->contact  = $request->link;
+        $banner->id_user = Auth::user()->id;
         $banner->save();
-        Cache::flush();
 
-        return redirect()->back()->with('status', 'Berhasil Menambahkan banner');
+        return redirect()->back()->with('status', 'Berhasil menyimpan data konsultasi');
     }
 
     public function show($id)
@@ -60,26 +69,32 @@ class ConsultationController extends Controller
     public function update(Request $request, $id)
     {
         $validasi = $this->validate($request, [
-            'dokumentasi' => 'image|mimes:jpeg,png,jpg|dimensions:min_width=980,min_height=480|max:1024'
+            'file' => 'image|mimes:jpeg,png,jpg|dimensions:min_width=980,min_height=480|max:1024',
+            'description' => 'required',
+            'name' => 'required',
+            'contact' => 'required',
+            'price' => 'required'
         ]);
 
-        $banner = \App\Banner::findOrfail($id);
+        $banner = Project::findOrfail($id);
 
-        $foto = $request->file('dokumentasi');
+        $foto = $request->file('file');
         if($foto){
-            if($banner->dokumentasi && file_exists(storage_path('app/public/' . $banner->dokumentasi))) { 
-                \Storage::delete('public/'. $banner->dokumentasi);
+            if($banner->file && file_exists(storage_path('app/public/' . $banner->file))) { 
+                Storage::delete('public/'. $banner->file);
             }
-            $foto_path = $foto->store('fotobanner', 'public');
-            $banner->dokumentasi = $foto_path;
+            $foto_path = $foto->store('files', 'public');
+            $banner->file = $foto_path;
         }
-        $banner->nama    = $request->nama;
-        $banner->link  = $request->link;
-        $banner->updated_by    = Auth::user()->name;
+        $banner->name    = $request->name;
+        $banner->description    = $request->description;
+        $banner->price    = $request->price;
+        $banner->contact  = $request->link;
+        $banner->id_user = Auth::user()->id;
         $banner->save();
-        Cache::flush();
 
-        return redirect()->back()->with('status', 'Data banner Telah Diedit');
+
+        return redirect()->back()->with('status', 'Data konsultasi berhasil diubah');
     }
 
 
