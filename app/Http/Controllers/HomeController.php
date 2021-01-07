@@ -43,7 +43,7 @@ class HomeController extends Controller
         $project = Project::with('files')->where('id',$id)->first();
         $data['to_id'] = 3;
         $data['id_project'] = $id;
-        $data['content'] = $project->description;
+        $data['content'] = '#'.$id.' '.$project->description;
         $data['from_id'] = Auth::user()->id;
 
         $message = Message::create($data);
