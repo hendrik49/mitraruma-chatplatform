@@ -52,10 +52,3 @@ Kemudian lakukan penginstalan packages
 - `php artisan serve`
 - `npm run prod` or `yarn prod`
 
-## Owner
-- [Febri Hidayan](https://github.com/febrihidayan)
-
-## Donasi
-Berikan saya donasi untuk terus memberikan aplikasi open source yang bermanfaat.
-- [Paypal](https://paypal.me/febrihidayan)
-- [Dana](https://link.dana.id/qr/2d6by546)
