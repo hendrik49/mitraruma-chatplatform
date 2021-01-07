@@ -31,7 +31,6 @@ class HomeController extends Controller
     {
         $id = $request->query('id');
         
-
         $project = Project::with('files')->where('id',$id)->first();
 
         if($project==null){
