@@ -3,6 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Events\MessageEvent;
+use App\Http\Resources\MessageResource;
+use App\Http\Resources\UserResource;
+use App\Message;
+use App\Project;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -25,7 +31,28 @@ class HomeController extends Controller
     {
         $id = $request->query('id');
 
-        return view('home',compact('id'));
+        $this->firstConsult($id);
+        return view('home', compact('id'));
+    }
+
+    public function firstConsult($id)
+    {
+
+        $data = array();
+
+        $project = Project::with('files')->where('id',$id)->first();
+        $data['to_id'] = 3;
+        $data['id_project'] = $id;
+        $data['content'] = $project->description;
+        $data['from_id'] = Auth::user()->id;
+
+        $message = Message::create($data);
+
+        event(new MessageEvent($message));
+
+        $message = new MessageResource($message);
+
+        //return response()->json($message);
     }
 
     public function consultation()
