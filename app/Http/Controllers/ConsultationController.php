@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Project;
+use App\ProjectFile;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -33,7 +34,6 @@ class ConsultationController extends Controller
     public function store(Request $request)
     {
         $validasi = $this->validate($request, [
-            'file' => 'image|mimes:jpeg,png,jpg|dimensions:min_width=980,min_height=480|max:1024',
             'description' => 'required',
             'name' => 'required',
             'contact' => 'required',
@@ -41,19 +41,24 @@ class ConsultationController extends Controller
         ]);
 
         $banner = new Project;
-        $foto = $request->file('file');
-        if($foto) {
-            $banner_path = $foto->store('files', 'public');
-            $banner->file = $banner_path;
-        }
         $banner->name    = $request->name;
         $banner->description    = $request->description;
         $banner->price    = $request->price;
-        $banner->contact  = $request->link;
+        $banner->contact  = $request->contact;
         $banner->id_user = Auth::user()->id;
         $banner->save();
 
-        return redirect()->back()->with('status', 'Berhasil menyimpan data konsultasi');
+        $foto = $request->file('file');
+        if($foto) {
+            $banner_path = $foto->store('files', 'public');
+            $files = new ProjectFile;
+            $files->id_user = Auth::user()->id;
+            $files->id_project = $banner->id;
+            $files->file = $banner_path;
+            $files->save();
+        }
+
+        return redirect()->route('home')->with('status', 'berhasil menyimpan data konsultasi');
     }
 
     public function show($id)
@@ -89,7 +94,7 @@ class ConsultationController extends Controller
         $banner->name    = $request->name;
         $banner->description    = $request->description;
         $banner->price    = $request->price;
-        $banner->contact  = $request->link;
+        $banner->contact  = $request->contact;
         $banner->id_user = Auth::user()->id;
         $banner->save();
 
